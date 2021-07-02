@@ -18,7 +18,7 @@ class Solicitud(models.Model):
     nombreCompleto = models.CharField(max_length=200, db_column='nombre_completo')
     fechaNac = models.DateField(db_column='fecha_nacimiento')
     calle = models.CharField(max_length=100)
-    numInterior = models.CharField(max_length=10, blank=True, db_column='num_interior')
+    numInterior = models.CharField(max_length=10, db_column='num_interior')
     ciudad = models.CharField(max_length=100)
     estado = models.CharField(max_length=100)
     cp = models.CharField(max_length=15)
@@ -59,7 +59,7 @@ class Solicitud(models.Model):
     uniDireccion = models.CharField(max_length=200, db_column='uni_direccion')
     uniDesde = models.DateField(null=True, db_column='uni_desde')
     unihasta = models.DateField(null=True, db_column='uni_hasta')
-    uIsGraduado = models.BooleanField(default=False, db_column='uni_is_graduado')
+    uniIsGraduado = models.BooleanField(default=False, db_column='uni_is_graduado')
     uniDiploma = models.CharField(blank=True, max_length=100, db_column='uni_diploma')
 
     otraEscuela = models.CharField(blank=True, max_length=200, db_column='otra_escuela')
