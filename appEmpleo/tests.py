@@ -135,6 +135,7 @@ class PostSolicitudTest(APITestCase):
 class GetSolicitudDetailTest(APITestCase):
     def setUp(self):
         configDB()
+
         self.user = User.objects.create_user(username='gabriel', is_staff=True)  # IsAuthenticated
 
     def test(self):
@@ -149,5 +150,31 @@ class GetSolicitudDetailTest(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
         response = self.client.get('/api/empleo/solicitud/33/detail/')
+        print(f'\n response JSON ===>>> 404 \n {json.dumps(response.json())} \n ---')
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+
+
+# python manage.py test --settings=server.settings.dev appEmpleo.tests.PutSolicitudAdminTest
+class PutSolicitudAdminTest(APITestCase):
+    def setUp(self):
+        configDB()
+
+        self.json = {
+            "isRevisado": True,
+            "comentariosRespuestas": "ES UN MUY BUEN CANDIDATO"
+        }
+
+        self.user = User.objects.create_user(username='gabriel', is_staff=True)  # IsAuthenticated
+
+    def test(self):
+        self.client.force_authenticate(user=self.user)
+
+        response = self.client.put('/api/empleo/solicitud-admin/3/update/', data=json.dumps(self.json), content_type='application/json')
+        print(f'\n response JSON ===>>> ok (3) \n {json.dumps(response.json())} \n ---')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertTrue(Solicitud.objects.get(id=3).isRevisado)
+        self.assertEqual(Solicitud.objects.get(id=3).comentariosRespuestas, 'ES UN MUY BUEN CANDIDATO')
+
+        response = self.client.put('/api/empleo/solicitud-admin/33/update/', data=json.dumps(self.json), content_type='application/json')
         print(f'\n response JSON ===>>> 404 \n {json.dumps(response.json())} \n ---')
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)

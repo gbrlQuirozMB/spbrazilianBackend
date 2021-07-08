@@ -36,3 +36,9 @@ class SolicitudCreateView(CreateAPIView):
 class SolicitudDetailView(RetrieveAPIView):
     queryset = Solicitud.objects.filter()
     serializer_class = SolicitudSerializer
+
+
+class SolicitudAdminUpdateView(UpdateAPIView):
+    queryset = Solicitud.objects.filter()
+    serializer_class = SolicitudAdminSerializer
+    http_method_names = ['put']
