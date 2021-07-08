@@ -31,3 +31,8 @@ class SolicitudCreateView(CreateAPIView):
             return self.create(request, *args, **kwargs)
         log.error(f'campos incorrectos: {serializer.errors}')
         raise ResponseBadRequest(serializer.errors)
+
+
+class SolicitudDetailView(RetrieveAPIView):
+    queryset = Solicitud.objects.filter()
+    serializer_class = SolicitudSerializer

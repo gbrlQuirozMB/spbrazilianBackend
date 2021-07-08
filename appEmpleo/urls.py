@@ -7,4 +7,5 @@ app_name = 'empleo'
 
 urlpatterns = [
     path('solicitud/create/', SolicitudCreateView.as_view(), ),
+    path('solicitud/<pk>/detail/', SolicitudDetailView.as_view(), ),
 ]

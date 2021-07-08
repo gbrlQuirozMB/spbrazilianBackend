@@ -9,9 +9,30 @@ from rest_framework import status
 
 
 def configDB():
-    pass
+    Solicitud.objects.create(posicionDeseada='Administrative', nombreCompleto='nombreCompleto1', fechaNac='2021-04-06', calle='calle1', numInterior='numImt1', ciudad='ciudad1', estado='estado1',
+                             cp='cp1', telefono='telefono1', email='email1', nss='nss1', disponibilidad='disponibilidad1', escSecundaria='escSecundaria1', secDireccion='secDireccion1',
+                             universidad='universidad1', uniDireccion='uniDireccion1', refUnoNombreCompleto='refUnoNombreCompleto1', refUnoRelacion='refUnoRelacion1',
+                             refUnoCompania='refUnoCompania1', refUnoTelefono='refUnoTelefono1', refDosNombreCompleto='refDosNombreCompleto1', refDosRelacion='refDosRelacion1',
+                             refDosCompania='refDosCompania1', refDosTelefono='refDosTelefono', peUnoCompania='peUnoCompania1', peUnoTelefono='peUnoTelefono1', peUnoDireccion='peUnoDireccion1',
+                             peUnoSupervisor='peUnoSupervisor1', peUnoPuesto='peUnoPuesto1', peDosCompania='peDosCompania1', peDosTelefono='peDosTelefono', peDosDireccion='peDosDireccion',
+                             peDosSupervisor='peDosSupervisor1', peDosPuesto='peDosPuesto1')
+    Solicitud.objects.create(posicionDeseada='Administrative', nombreCompleto='nombreCompleto2', fechaNac='2022-04-06', calle='calle2', numInterior='numImt2', ciudad='ciudad2', estado='estado2',
+                             cp='cp2', telefono='telefono2', email='email2', nss='nss2', disponibilidad='disponibilidad2', escSecundaria='escSecundaria2', secDireccion='secDireccion2',
+                             universidad='universidad2', uniDireccion='uniDireccion2', refUnoNombreCompleto='refUnoNombreCompleto2', refUnoRelacion='refUnoRelacion2',
+                             refUnoCompania='refUnoCompania2', refUnoTelefono='refUnoTelefono2', refDosNombreCompleto='refDosNombreCompleto2', refDosRelacion='refDosRelacion2',
+                             refDosCompania='refDosCompania2', refDosTelefono='refDosTelefono', peUnoCompania='peUnoCompania2', peUnoTelefono='peUnoTelefono2', peUnoDireccion='peUnoDireccion2',
+                             peUnoSupervisor='peUnoSupervisor2', peUnoPuesto='peUnoPuesto2', peDosCompania='peDosCompania2', peDosTelefono='peDosTelefono', peDosDireccion='peDosDireccion',
+                             peDosSupervisor='peDosSupervisor2', peDosPuesto='peDosPuesto2')
+    Solicitud.objects.create(posicionDeseada='Administrative', nombreCompleto='nombreCompleto3', fechaNac='3033-04-06', calle='calle3', numInterior='numImt3', ciudad='ciudad3', estado='estado3',
+                             cp='cp3', telefono='telefono3', email='email3', nss='nss3', disponibilidad='disponibilidad3', escSecundaria='escSecundaria3', secDireccion='secDireccion3',
+                             universidad='universidad3', uniDireccion='uniDireccion3', refUnoNombreCompleto='refUnoNombreCompleto3', refUnoRelacion='refUnoRelacion3',
+                             refUnoCompania='refUnoCompania3', refUnoTelefono='refUnoTelefono3', refDosNombreCompleto='refDosNombreCompleto3', refDosRelacion='refDosRelacion3',
+                             refDosCompania='refDosCompania3', refDosTelefono='refDosTelefono', peUnoCompania='peUnoCompania3', peUnoTelefono='peUnoTelefono3', peUnoDireccion='peUnoDireccion3',
+                             peUnoSupervisor='peUnoSupervisor3', peUnoPuesto='peUnoPuesto3', peDosCompania='peDosCompania3', peDosTelefono='peDosTelefono', peDosDireccion='peDosDireccion',
+                             peDosSupervisor='peDosSupervisor3', peDosPuesto='peDosPuesto3')
 
-# python manage.py test appEmpleo.tests.PostSolicitudTest --settings=server.settings.dev
+
+# python manage.py test --settings=server.settings.dev appEmpleo.tests.PostSolicitudTest
 class PostSolicitudTest(APITestCase):
     def setUp(self):
         self.json = {
@@ -108,3 +129,25 @@ class PostSolicitudTest(APITestCase):
         response = self.client.post('/api/empleo/solicitud/create/', data=json.dumps(self.json), content_type='application/json')
         print(f'response JSON ===>>> 400 faltan 3 campos \n {json.dumps(response.json())} \n --- \n')
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+
+# python manage.py test --settings=server.settings.dev appEmpleo.tests.GetSolicitudDetailTest
+class GetSolicitudDetailTest(APITestCase):
+    def setUp(self):
+        configDB()
+        self.user = User.objects.create_user(username='gabriel', is_staff=True)  # IsAuthenticated
+
+    def test(self):
+        response = self.client.get('/api/empleo/solicitud/3/detail/')
+        print(f'\n response JSON ===>>> 401 no autorizado \n {json.dumps(response.json())} \n ---')
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
+        self.client.force_authenticate(user=self.user)
+
+        response = self.client.get('/api/empleo/solicitud/3/detail/')
+        print(f'\n response JSON ===>>> ok (3) \n {json.dumps(response.json())} \n ---')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+        response = self.client.get('/api/empleo/solicitud/33/detail/')
+        print(f'\n response JSON ===>>> 404 \n {json.dumps(response.json())} \n ---')
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
