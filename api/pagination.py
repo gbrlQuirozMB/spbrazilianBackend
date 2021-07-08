@@ -1,5 +1,6 @@
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
-from api.logger import log
+import logging
+log = logging.getLogger('django')
 
 class Pagination:
     totalElements = 0

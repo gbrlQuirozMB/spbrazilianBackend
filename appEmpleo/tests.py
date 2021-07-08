@@ -12,8 +12,6 @@ def configDB():
     pass
 
 # python manage.py test appEmpleo.tests.PostSolicitudTest --settings=server.settings.dev
-
-
 class PostSolicitudTest(APITestCase):
     def setUp(self):
         self.json = {
@@ -80,7 +78,8 @@ class PostSolicitudTest(APITestCase):
         self.assertEqual(Solicitud.objects.get(id=1).nombreCompleto, 'Gabriel Quiroz Olvera')
         self.assertEqual(Solicitud.objects.filter().count(), 1)
 
-        del self.json['cuando']
+        # del self.json['cuando']
+        self.json['cuando'] = None
         response = self.client.post('/api/empleo/solicitud/create/', data=json.dumps(self.json), content_type='application/json')
         print(f'response JSON ===>>> 409 si ha trabajado antes, debe decir cuando \n {json.dumps(response.json())} \n --- \n')
         self.assertEqual(response.status_code, status.HTTP_409_CONFLICT)

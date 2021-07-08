@@ -4,7 +4,8 @@ from rest_framework import permissions
 
 from api.exceptions import *
 from .serializers import *
-from api.logger import log
+import logging
+log = logging.getLogger('django')
 
 
 class SolicitudCreateView(CreateAPIView):
@@ -28,5 +29,5 @@ class SolicitudCreateView(CreateAPIView):
                     raise ResponseError('Si es graduado de universidad, debe indicar diploma', 409)
 
             return self.create(request, *args, **kwargs)
-        log.info(f'campos incorrectos: {serializer.errors}')
+        log.error(f'campos incorrectos: {serializer.errors}')
         raise ResponseBadRequest(serializer.errors)
