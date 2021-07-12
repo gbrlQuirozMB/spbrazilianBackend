@@ -9,4 +9,5 @@ urlpatterns = [
     path('solicitud/create/', SolicitudCreateView.as_view(), ),
     path('solicitud/<pk>/detail/', SolicitudDetailView.as_view(), ),
     path('solicitud-admin/<pk>/update/', SolicitudAdminUpdateView.as_view(), ),
+    path('solicitud/list/', SolicitudListView.as_view(), ),
 ]

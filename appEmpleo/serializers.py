@@ -13,3 +13,10 @@ class SolicitudAdminSerializer(serializers.ModelSerializer):
     class Meta:
         model = Solicitud
         fields = ['id', 'isRevisado', 'comentariosRespuestas']
+
+
+class SolicitudListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Solicitud
+        fields = ['id', 'nombreCompleto', 'calle', 'numInterior', 'ciudad', 'estado', 'cp', 'email', 'telefono', 'posicionDeseada', 'refUnoNombreCompleto', 'refUnoRelacion', 'refUnoTelefono',
+                  'isRevisado']

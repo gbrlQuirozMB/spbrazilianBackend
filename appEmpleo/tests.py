@@ -15,7 +15,7 @@ def configDB():
                              refUnoCompania='refUnoCompania1', refUnoTelefono='refUnoTelefono1', refDosNombreCompleto='refDosNombreCompleto1', refDosRelacion='refDosRelacion1',
                              refDosCompania='refDosCompania1', refDosTelefono='refDosTelefono', peUnoCompania='peUnoCompania1', peUnoTelefono='peUnoTelefono1', peUnoDireccion='peUnoDireccion1',
                              peUnoSupervisor='peUnoSupervisor1', peUnoPuesto='peUnoPuesto1', peDosCompania='peDosCompania1', peDosTelefono='peDosTelefono', peDosDireccion='peDosDireccion',
-                             peDosSupervisor='peDosSupervisor1', peDosPuesto='peDosPuesto1')
+                             peDosSupervisor='peDosSupervisor1', peDosPuesto='peDosPuesto1', isRevisado=True, comentariosRespuestas='Si la hace!!!')
     Solicitud.objects.create(posicionDeseada='Administrative', nombreCompleto='nombreCompleto2', fechaNac='2022-04-06', calle='calle2', numInterior='numImt2', ciudad='ciudad2', estado='estado2',
                              cp='cp2', telefono='telefono2', email='email2', nss='nss2', disponibilidad='disponibilidad2', escSecundaria='escSecundaria2', secDireccion='secDireccion2',
                              universidad='universidad2', uniDireccion='uniDireccion2', refUnoNombreCompleto='refUnoNombreCompleto2', refUnoRelacion='refUnoRelacion2',
@@ -178,3 +178,18 @@ class PutSolicitudAdminTest(APITestCase):
         response = self.client.put('/api/empleo/solicitud-admin/33/update/', data=json.dumps(self.json), content_type='application/json')
         print(f'\n response JSON ===>>> 404 \n {json.dumps(response.json())} \n ---')
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+
+
+# python manage.py test --settings=server.settings.dev appEmpleo.tests.GetSolicitudListTest
+class GetSolicitudListTest(APITestCase):
+    def setUp(self):
+        configDB()
+
+        self.user = User.objects.create_user(username='gabriel', is_staff=True)  # IsAuthenticated
+
+    def test(self):
+        self.client.force_authenticate(user=self.user)
+
+        response = self.client.get('/api/empleo/solicitud/list/')
+        print(f'\n response JSON ===>>> ok (3) \n {json.dumps(response.json())} \n ---')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
