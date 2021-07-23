@@ -30,3 +30,29 @@ class GetCorreoListTest(APITestCase):
         response = self.client.get('/api/correo/list/')
         print(f'\n response JSON ===>>> ok (3) \n {json.dumps(response.json())} \n ---')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+
+# python manage.py test --settings=server.settings.dev appComunicacion.tests.PutCorreoTest
+class PutCorreoTest(APITestCase):
+    def setUp(self):
+        configDB()
+
+        self.json = {
+            "isAtendido": True,
+            "respuesta": "Si ya lo lei"
+        }
+
+        self.user = User.objects.create_user(username='gabriel', is_staff=True)  # IsAuthenticated
+
+    def test(self):
+        self.client.force_authenticate(user=self.user)
+
+        response = self.client.put('/api/correo/3/update/', data=json.dumps(self.json), content_type='application/json')
+        print(f'\n response JSON ===>>> ok (3) \n {json.dumps(response.json())} \n ---')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertTrue(DatosCorreo.objects.get(id=3).isAtendido)
+        self.assertEqual(DatosCorreo.objects.get(id=3).respuesta, 'Si ya lo lei')
+
+        response = self.client.put('/api/correo/33/update/', data=json.dumps(self.json), content_type='application/json')
+        print(f'\n response JSON ===>>> 404 \n {json.dumps(response.json())} \n ---')
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)

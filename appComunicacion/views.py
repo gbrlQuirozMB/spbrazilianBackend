@@ -41,3 +41,9 @@ class EnviarCorreoCreateView(CreateAPIView):
 class CorreoListView(ListAPIView):
     queryset = DatosCorreo.objects.all()
     serializer_class = DatosCorreoListSerializer
+
+
+class CorreoUpdateView(UpdateAPIView):
+    queryset = DatosCorreo.objects.filter()
+    serializer_class = DatosCorreoUpdateSerializer
+    http_method_names = ['put']
