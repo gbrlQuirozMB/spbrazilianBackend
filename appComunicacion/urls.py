@@ -7,4 +7,5 @@ app_name = 'correo'
 
 urlpatterns = [
     path('send/', EnviarCorreoCreateView.as_view(), ),
+    path('list/', CorreoListView.as_view(), ),
 ]

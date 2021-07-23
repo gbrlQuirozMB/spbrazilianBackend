@@ -1,3 +1,4 @@
+from django.core.mail import send_mail
 from django.shortcuts import render
 from rest_framework.generics import ListAPIView, CreateAPIView, RetrieveAPIView, RetrieveUpdateAPIView, UpdateAPIView, DestroyAPIView
 from rest_framework import permissions
@@ -6,8 +7,6 @@ from api.exceptions import *
 from .serializers import *
 import logging
 log = logging.getLogger('django')
-
-from django.core.mail import send_mail
 
 
 class EnviarCorreoCreateView(CreateAPIView):
@@ -37,3 +36,8 @@ class EnviarCorreoCreateView(CreateAPIView):
             return self.create(request, *args, **kwargs)
         log.error(f'campos incorrectos: {serializer.errors}')
         raise ResponseBadRequest(serializer.errors)
+
+
+class CorreoListView(ListAPIView):
+    queryset = DatosCorreo.objects.all()
+    serializer_class = DatosCorreoListSerializer
