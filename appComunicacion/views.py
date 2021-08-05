@@ -26,7 +26,7 @@ class EnviarCorreoCreateView(CreateAPIView):
                 send_mail(
                     'SP Brazilian - Contact Us',
                     text_content,
-                    'no-reply@spbrazilian.com',
+                    'info@spbrazilian.com',
                     ['info@spbrazilian.com'],
                     fail_silently=False,
                 )
