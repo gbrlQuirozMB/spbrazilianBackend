@@ -152,7 +152,7 @@ LOGGING = {
     'handlers': {
         'console': {
             'level': 'INFO',
-            'filters': ['require_debug_true'],
+            # 'filters': ['require_debug_true'],
             'class': 'logging.StreamHandler',
             # 'formatter': 'django.server',
         },
@@ -161,7 +161,7 @@ LOGGING = {
             # 'class': 'logging.FileHandler',
             'class': 'logging.handlers.TimedRotatingFileHandler',
             'when': 'midnight',
-            'backupCount': '3',
+            'backupCount': 3,
             'filename': 'errores.log',
             'formatter': 'personal',
         }
