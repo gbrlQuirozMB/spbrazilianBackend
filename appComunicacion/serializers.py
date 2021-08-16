@@ -15,7 +15,7 @@ class DatosCorreoListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = DatosCorreo
-        fields = ['id', 'creado_en', 'nombre', 'email', 'telefono', 'isAtendido']
+        fields = ['id', 'creado_en', 'nombre', 'email', 'telefono', 'isAtendido', 'mensaje', 'respuesta']
 
 
 class DatosCorreoUpdateSerializer(serializers.ModelSerializer):
