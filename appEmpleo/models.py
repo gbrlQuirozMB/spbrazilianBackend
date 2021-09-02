@@ -6,7 +6,7 @@ class Solicitud(models.Model):
     actualizado_en = models.DateTimeField(auto_now=True)
 
     posicionDeseada = models.CharField(max_length=25, db_column='posicion_deseada', choices=(
-        ('Server/Churrasqueiro', 'Server/Churrasqueiro'),
+        ('Server/Gaucho', 'Server/Gaucho'),
         ('Bartender', 'Bartender'),
         ('Prep/Line Cook', 'Prep/Line Cook'),
         ('Administrative', 'Administrative'),
